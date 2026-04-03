@@ -76,7 +76,7 @@ dim_date
 - Start Airflow
 ```bash 
 mkdir -p ./logs ./config
-echo -e "AIRFLOW_UID=$(id -u)" > .env
+echo -e "AIRFLOW_UID=$(id -u)" >> .env
 docker compose run airflow-cli airflow config list
 docker compose up 
 ```
