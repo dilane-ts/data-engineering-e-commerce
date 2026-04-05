@@ -45,8 +45,9 @@ fact_sales
 - order_id
 - customer_id
 - product_id
-- order_purchase_date
-- order_delivered_timestamp
+- date_id
+- delay_delivery INT (order_delivery - estimate_delivery)
+- payment_method STRING 
 - revenue (price + shipping_charges)
 ```
 **Dimension tables**
