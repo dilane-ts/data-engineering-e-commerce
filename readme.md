@@ -76,7 +76,17 @@ dim_date
 - Start Airflow
 ```bash 
 mkdir -p ./logs ./config
-echo -e "AIRFLOW_UID=$(id -u)" >> .env
+echo -e "AIRFLOW_UID=$(id -u)" > .env
 docker compose run airflow-cli airflow config list
+docker compose up airflow-init
 docker compose up 
 ```
+
+Open the address <a href='http://localhost:8080'> to see the airflow panel. The login credentials is `airflow` for the username and `airflow` for the password. 
+
+En suite il faut creer une connection a la base de donnees en allant dans `Admin >  connections > add Connections` et les informations de la base de donnees sont: 
+ - username: warehouse
+ - password: warehouse
+ - database: warehouse
+ - host: postgres-warehouse
+ - port: 5432 (internal port, external port is 5433)

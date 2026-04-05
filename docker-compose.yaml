@@ -88,8 +88,6 @@ x-airflow-common:
       condition: service_healthy
     postgres:
       condition: service_healthy
-  networks:
-    - postgres-network
 
 
 services:
@@ -348,21 +346,13 @@ services:
     ports:
       - "5433:5432"
     restart: always
-    networks:
-      - postgres-network
 
   adminer:
     image: adminer
     restart: always
     ports:
       - "8000:8080"
-    networks:
-      - postgres-network
 
 volumes:
   postgres-db-volume:
   postgres-warehouse:
-
-networks:
-  postgres-network:
-    driver: bridge
