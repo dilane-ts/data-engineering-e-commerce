@@ -65,7 +65,7 @@ dim_product
 ```
 
 ```
-dim_date
+dim_date (virtual)
 - date_id
 - day
 - month

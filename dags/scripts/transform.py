@@ -1,10 +1,9 @@
 import pandas as pd
-import os
 
 parquet_staging_path = "/opt/airflow/dags/data/staging"
 parquet_warehouse_path = "/opt/airflow/dags/data/warehouse"
 
-def transform():
+def transform_data():
     order_items = pd.read_parquet(f"{parquet_staging_path}/order_items.parquet")
     orders = pd.read_parquet(f"{parquet_staging_path}/orders.parquet")
     payments = pd.read_parquet(f"{parquet_staging_path}/payments.parquet")
@@ -23,18 +22,16 @@ def transform():
     new_orders = new_orders.merge(payments, on='order_id', how='inner')
     dim_facts["payment_method"] = new_orders["payment_type"]
 
-    # date dim
-    dim_date = new_orders.loc[:, ["order_approved_at"]]
-    dim_facts["date_id"] = dim_date["order_approved_at"]
+    # date
+    dim_facts["approved_at"] =new_orders.loc[:, ["order_approved_at"]]
 
-    dim_date = dim_date.rename(columns={"order_approved_at": "date_id"})
-    dim_date["day"] = dim_date["date_id"].dt.day.fillna(-1).astype("int")
-    dim_date["month"] = dim_date["date_id"].dt.month.fillna(-1).astype("int")
-    dim_date["year"] = dim_date["date_id"].dt.year.fillna(-1).astype("int")
+    # dim_date = dim_date.rename(columns={"order_approved_at": "date_id"})
+    # dim_date["day"] = dim_date["date_id"].dt.day.fillna(-1).astype("int")
+    # dim_date["month"] = dim_date["date_id"].dt.month.fillna(-1).astype("int")
+    # dim_date["year"] = dim_date["date_id"].dt.year.fillna(-1).astype("int")
 
     # save results
     dim_facts.to_parquet(f"{parquet_warehouse_path}/orders.parquet")
-    dim_date.to_parquet(f"{parquet_warehouse_path}/date.parquet")
 
     print(f"# end for transformation: orders shape {dim_facts.shape}.")
 

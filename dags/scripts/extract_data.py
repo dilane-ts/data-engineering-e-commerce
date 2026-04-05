@@ -16,7 +16,11 @@ def extract_data():
     customers.to_parquet(f"{parquet_warehouse_path}/customers.parquet")
 
     products = products.loc[:, ["product_id", "product_category_name"]]
+    # drop doublons
+    products = products.drop_duplicates()
+    
     products.to_parquet(f"{parquet_warehouse_path}/products.parquet")
+    
     
     orders = orders.drop(["order_status", "order_purchase_timestamp"], axis=1)
     orders.to_parquet(f"{parquet_staging_path}/orders.parquet")
