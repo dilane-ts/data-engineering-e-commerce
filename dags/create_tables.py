@@ -20,6 +20,6 @@ with DAG(
 
     create_tables = SQLExecuteQueryOperator(
         task_id='create_tables',
-        conn_id='dw_postgres',
+        conn_id='neon_postgresql',
         sql=cmd
     )

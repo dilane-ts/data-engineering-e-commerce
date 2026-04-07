@@ -16,7 +16,7 @@ with DAG(
     catchup=False,
 ) as dag:
     
-    hook = PostgresHook(postgres_conn_id="dw_postgres")
+    hook = PostgresHook(postgres_conn_id="neon_postgresql")
     engine = hook.get_sqlalchemy_engine()
     parquet_warehouse_path = "/opt/airflow/dags/data/warehouse"
 
